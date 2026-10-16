@@ -1,0 +1,205 @@
+<svg class="icon-definitions" aria-hidden="true">
+  <defs>
+    <symbol id="stix-menu" viewBox="0 0 24 24">
+      <path d="M3 5h18M3 12h18M3 19h18" />
+    </symbol>
+
+    <symbol id="stix-search" viewBox="0 0 24 24">
+      <circle cx="10.5" cy="10.5" r="7" />
+      <path d="m16 16 5 5" />
+    </symbol>
+
+    <symbol id="stix-account" viewBox="0 0 24 24">
+      <circle cx="12" cy="6.5" r="3.5" />
+      <path d="M3.5 22v-3a8.5 6.5 0 0 1 17 0v3Z" />
+    </symbol>
+
+    <symbol id="stix-bag" viewBox="0 0 24 24">
+      <path d="M5 4h14l1 14a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4Z" />
+      <path d="M8 4v3a4 4 0 0 0 8 0V4" />
+    </symbol>
+
+    <symbol id="stix-close" viewBox="0 0 24 24">
+      <path d="m5 5 14 14M19 5 5 19" />
+    </symbol>
+
+    <symbol id="stix-chevron" viewBox="0 0 24 24">
+      <path d="m9 5 7 7-7 7" />
+    </symbol>
+  </defs>
+</svg>
+
+<section
+  class="announcement"
+  aria-label="Store announcements"
+  (mouseenter)="pauseRotation()"
+  (mouseleave)="startRotation()"
+  (focusin)="pauseRotation()"
+>
+  <button
+    type="button"
+    class="announcement-arrow"
+    aria-label="Previous announcement"
+    (click)="previousAnnouncement()"
+  >
+    <svg class="icon previous" aria-hidden="true">
+      <use href="#stix-chevron" />
+    </svg>
+  </button>
+
+  <div class="announcement-message">
+    @if (announcementIndex() === 0) {
+      <a href="/products/volume">
+        {{ announcement }}
+        <span aria-hidden="true"> →</span>
+      </a>
+    } @else {
+      <span>{{ announcement }}</span>
+    }
+  </div>
+
+  <button
+    type="button"
+    class="announcement-arrow"
+    aria-label="Next announcement"
+    (click)="nextAnnouncement()"
+  >
+    <svg class="icon" aria-hidden="true">
+      <use href="#stix-chevron" />
+    </svg>
+  </button>
+</section>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-actions header-actions-left">
+      <button
+        type="button"
+        class="icon-button"
+        aria-label="Open menu"
+        aria-haspopup="dialog"
+        aria-controls="site-menu"
+        [attr.aria-expanded]="activePanel() === 'menu'"
+        (click)="openPanel('menu')"
+      >
+        <svg class="icon" aria-hidden="true">
+          <use href="#stix-menu" />
+        </svg>
+      </button>
+
+      <button
+        type="button"
+        class="icon-button"
+        aria-label="Open search"
+        aria-haspopup="dialog"
+        aria-controls="site-search"
+        [attr.aria-expanded]="activePanel() === 'search'"
+        (click)="openPanel('search')"
+      >
+        <svg class="icon" aria-hidden="true">
+          <use href="#stix-search" />
+        </svg>
+      </button>
+    </div>
+
+    <a class="brand" href="/" aria-label="STIX home"> STIX </a>
+
+    <div class="header-actions header-actions-right">
+      <a class="icon-button account-link" href="/account" aria-label="Log in">
+        <svg class="icon" aria-hidden="true">
+          <use href="#stix-account" />
+        </svg>
+      </a>
+
+      <a class="icon-button" href="/cart" aria-label="Shopping cart">
+        <svg class="icon" aria-hidden="true">
+          <use href="#stix-bag" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<dialog
+  #menuDialog
+  id="site-menu"
+  class="menu-dialog"
+  aria-label="Main navigation"
+  (click)="closeOnBackdrop($event)"
+  (close)="onDialogClosed()"
+>
+  <div class="menu-panel">
+    <div class="drawer-top">
+      <button
+        type="button"
+        class="icon-button"
+        aria-label="Close menu"
+        autofocus
+        (click)="closePanel()"
+      >
+        <svg class="icon" aria-hidden="true">
+          <use href="#stix-close" />
+        </svg>
+      </button>
+    </div>
+
+    <nav class="drawer-navigation" aria-label="Main">
+      <a href="/" aria-current="page">Home</a>
+      <a href="/collections/all">Catalog</a>
+      <a href="/pages/contact">Contact</a>
+    </nav>
+
+    <div class="drawer-bottom">
+      <a class="drawer-account" href="/account">
+        <svg class="icon" aria-hidden="true">
+          <use href="#stix-account" />
+        </svg>
+        <span>Log in</span>
+      </a>
+    </div>
+  </div>
+</dialog>
+
+<dialog
+  #searchDialog
+  id="site-search"
+  class="search-dialog"
+  aria-label="Search products"
+  (click)="closeOnBackdrop($event)"
+  (close)="onDialogClosed()"
+>
+  <div class="search-panel">
+    <form class="search-form" action="/search" method="get" role="search">
+      <label class="visually-hidden" for="header-search"> Search products </label>
+
+      <div class="search-field">
+        <input
+          id="header-search"
+          name="q"
+          type="search"
+          placeholder="Search"
+          autocomplete="off"
+          required
+          autofocus
+        />
+
+        <button type="submit" class="icon-button" aria-label="Submit search">
+          <svg class="icon" aria-hidden="true">
+            <use href="#stix-search" />
+          </svg>
+        </button>
+      </div>
+    </form>
+
+    <button
+      type="button"
+      class="icon-button"
+      aria-label="Close search"
+      (click)="closePanel()"
+    >
+      <svg class="icon" aria-hidden="true">
+        <use href="#stix-close" />
+      </svg>
+    </button>
+  </div>
+</dialog>

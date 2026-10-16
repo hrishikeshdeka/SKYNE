@@ -1,0 +1,156 @@
+<main id="main-content">
+  <section class="hero" aria-labelledby="hero-title">
+    <img
+      class="hero-image"
+      src="/images/money.png"
+      alt=""
+      width="1586"
+      height="992"
+      fetchpriority="high"
+    >
+
+    <div class="hero-shade" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <h1 id="hero-title">ART FOR YOUR SCREEN.</h1>
+
+      <a class="button button-white" href="#archive">EXPLORE ARCHIVE</a>
+    </div>
+  </section>
+
+  <section id="archive" class="archive page-width" aria-labelledby="archive-title">
+    <h2 id="archive-title" class="section-title">The Archive</h2>
+
+    <div class="product-grid">
+      @for (product of products; track product.id) {
+        <article class="product-card">
+          <a
+            class="product-link"
+            [href]="product.href"
+            [attr.aria-labelledby]="'title-' + product.id"
+          >
+            <div class="product-media">
+              <img
+                class="product-image product-image-primary"
+                [src]="product.image"
+                alt=""
+                width="800"
+                height="800"
+                loading="lazy"
+                decoding="async"
+              >
+
+              <img
+                class="product-image product-image-hover"
+                [src]="product.hoverImage"
+                alt=""
+                width="800"
+                height="800"
+                loading="lazy"
+                decoding="async"
+              >
+
+              <span class="sale-badge">Sale</span>
+            </div>
+
+            <h3 class="product-title" [id]="'title-' + product.id">
+              {{ product.title }}
+            </h3>
+          </a>
+
+          <div class="product-price">
+            <span class="visually-hidden">Original price:</span>
+            <s class="original-price">
+              {{ product.originalPrice | currency: 'INR' : 'Rs. ' : '1.2-2' }} INR
+            </s>
+
+            <span class="visually-hidden">Sale price:</span>
+            <span class="sale-price">
+              {{ product.price | currency: 'INR' : 'Rs. ' : '1.2-2' }} INR
+            </span>
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="benefits" aria-labelledby="benefits-title">
+    <div class="benefits-content">
+      <h2 id="benefits-title" class="section-title">What You’ll Get</h2>
+
+      <div class="benefits-copy">
+        <p>Original 4K wallpapers, ready in seconds after purchase.</p>
+        <p>No subscriptions, no waiting. Download once, use forever.</p>
+        <p>New drops added regularly, all designed in-house.</p>
+        <p>
+          Every wallpaper built around one idea: what you look at daily shapes
+          what you become.
+        </p>
+      </div>
+
+      <a class="button button-black" href="#archive">GET WALLPAPERS</a>
+    </div>
+  </section>
+
+  <section class="faq-section" aria-labelledby="faq-title">
+    <div class="faq-content">
+      <h2 id="faq-title" class="section-title">Before You Join</h2>
+
+      <div class="faq-list">
+        @for (faq of faqs; track faq.question) {
+          <details class="faq-item">
+            <summary>
+              <span>{{ faq.question }}</span>
+              <svg
+                class="faq-chevron"
+                width="12"
+                height="8"
+                viewBox="0 0 12 8"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M1 1.5 6 6.5 11 1.5"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                />
+              </svg>
+            </summary>
+
+            <div class="faq-answer">
+              <p>{{ faq.answer }}</p>
+            </div>
+          </details>
+        }
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner page-width">
+    <div class="footer-top">
+      <div class="country">
+        <label for="footer-country">Country/region</label>
+        <select id="footer-country" name="country">
+          <option value="IN">India | INR ₹</option>
+        </select>
+      </div>
+
+      <div class="payment-methods">
+        <span class="visually-hidden">Payment method design placeholders</span>
+        <ul class="payment-list" aria-label="Payment method placeholders">
+          @for (payment of paymentLabels; track payment) {
+            <li class="payment-badge">{{ payment }}</li>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <small>© {{ year }}, <a href="/">STIX</a></small>
+      <span class="footer-dot" aria-hidden="true">·</span>
+      <a class="privacy-link" href="/policies/privacy-policy">Privacy policy</a>
+    </div>
+  </div>
+</footer>
